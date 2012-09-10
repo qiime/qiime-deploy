@@ -91,6 +91,7 @@ def deploy_r(app, setup_dir):
                 ['vegan','http://cran.r-project.org'],\
                 ['ape','http://cran.r-project.org'],\
                 ['MASS','http://cran.r-project.org'],\
+                ['gtools','http://cran.r-project.org'],\
                 ['klaR','http://cran.r-project.org']]
     for pkg in packages:
         r_exe = os.path.join(app.deploy_dir, 'bin/R')
