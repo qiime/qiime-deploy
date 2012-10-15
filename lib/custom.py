@@ -2,6 +2,7 @@ from lib import util
 
 import commands
 import os
+import stat
 
 """
 If additional applications are added to the config file with the build-type
@@ -328,9 +329,26 @@ def custom_deploy(app, setup_dir):
     app.log.error('Unrecognized application: %s' % app.name)
     return 1
 
+def set_permissions_all_files(deploy_dir):
+    for dir_path, dir_names, file_names in os.walk(deploy_dir):
+        for f in file_names:
+            full_name = os.path.join(dir_path, f)
+            st = os.stat(full_name)
+            # if the user can execute it, set 755
+            if bool(st.st_mode & stat.S_IEXEC):
+                os.chmod(full_name, int("755", 8))
+            # if the user can't execute it, set it to 644
+            else:
+                os.chmod(full_name, int("644", 8))
+        # set directories to 755
+        for d in dir_names:
+            full_path = os.path.join(dir_path, d)
+            os.chmod(full_path, int("755", 8))
+
 """
 Any custom finalization code (after deploy is complete) should go here. In
 QIIME's case, we'll generate the qiime_config file.
 """
 def custom_finalize(python_path, deploy_dir, all_apps_to_deploy, log):
+    set_permissions_all_files(deploy_dir)
     return _generate_qiime_config(python_path, deploy_dir, all_apps_to_deploy, log)
