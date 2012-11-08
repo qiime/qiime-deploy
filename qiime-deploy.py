@@ -329,7 +329,7 @@ def deploy_apps(deploy_config, force_remove=False, remove_repos=False):
                            append_bashprofile)
 
     # run any custom finalization code, in QIIME's case, this is where
-    # ~/.qiime_config is generated and written
+    # the QIIME config file is generated and written
     rc = custom.custom_finalize(custom_py_exe, deploy_dir, all_apps_to_deploy, log)
 
     sys.stdout.write(summary)
