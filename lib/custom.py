@@ -221,7 +221,8 @@ def deploy_dotur(app, setup_dir):
     return util.copytree(setup_dir, app.deploy_dir)
 
 def _generate_qiime_config(python_path, deploy_dir, all_apps_to_deploy, log):
-    log.info('Generating new ~/.qiime_config_default file')
+    qiime_config_path = os.path.join(deploy_dir, 'qiime_config')
+    log.info('Generating new %s file' % qiime_config_path)
 
     qiime_path = None
     blast_path = None
@@ -237,8 +238,8 @@ def _generate_qiime_config(python_path, deploy_dir, all_apps_to_deploy, log):
     if not (qiime_path and \
             blast_path and \
             blast_data_path):
-        log.error('Missing necessary path for ~/.qiime_config_default file.')
-        log.error('Skipping generation of ~/.qiime_config_default')
+        log.error('Missing necessary path for %s file.' % qiime_config_path)
+        log.error('Skipping generation of %s' % qiime_config_path)
         return 1
 
     lines = []
@@ -289,22 +290,21 @@ def _generate_qiime_config(python_path, deploy_dir, all_apps_to_deploy, log):
     
     lines.append('')
     lines.append('')
-    qiimeFileName = os.path.expanduser('~/.qiime_config_default')
 
     old_contents = []
-    if os.path.exists(qiimeFileName):
-        oldFile = open(qiimeFileName, 'r')
+    if os.path.exists(qiime_config_path):
+        oldFile = open(qiime_config_path, 'r')
         old_contents = oldFile.readlines()
         oldFile.close()
 
     if lines != old_contents:
-        util.backup_file(qiimeFileName)
-        if os.path.exists(qiimeFileName):
-            os.remove(qiimeFileName)
+        util.backup_file(qiime_config_path)
+        if os.path.exists(qiime_config_path):
+            os.remove(qiime_config_path)
 
-        util.write_new_file(qiimeFileName, lines)
+        util.write_new_file(qiime_config_path, lines)
 
-        log.info('Generated new ~/.qiime_config_default file')
+        log.info('Generated new %s file' % qiime_config_path)
 
     return 0
 
