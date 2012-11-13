@@ -87,13 +87,14 @@ def deploy_r(app, setup_dir):
 
     # hack for qiime requirements, but that's pretty much this whole file
     # packages an array of ['pkgname','repository'] 
-    packages = [['randomForest','http://cran.r-project.org'],\
-                ['optparse','http://cran.r-project.org'],\
-                ['vegan','http://cran.r-project.org'],\
-                ['ape','http://cran.r-project.org'],\
-                ['MASS','http://cran.r-project.org'],\
-                ['gtools','http://cran.r-project.org'],\
-                ['klaR','http://cran.r-project.org']]
+    packages = [['randomForest','http://cran.r-project.org'],
+                ['optparse','http://cran.r-project.org'],
+                ['vegan','http://cran.r-project.org'],
+                ['ape','http://cran.r-project.org'],
+                ['MASS','http://cran.r-project.org'],
+                ['gtools','http://cran.r-project.org'],
+                ['klaR','http://cran.r-project.org'],
+                ['RColorBrewer','http://cran.r-project.org']]
     for pkg in packages:
         r_exe = os.path.join(app.deploy_dir, 'bin/R')
         makeStr  = "echo \"install.packages('%s',repos='%s')\" | %s --slave --vanilla" % (pkg[0],pkg[1],r_exe)
