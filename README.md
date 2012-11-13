@@ -110,8 +110,7 @@ _qiime-deploy_ will create a QIIME config file under
 you would like to edit this file to further customize your QIIME install, feel
 free to do so. If you rerun _qiime-deploy_ using the same deploy directory (in
 this example, ```$HOME/qiime_software/```), your old QIIME config will be
-renamed to ```qiime_config.bak``` and the new one will be named
-```qiime_config```.
+renamed to ```qiime_config.bak``` and the new one will be named ```qiime_config```.
 
 ### Installing QIIME 1.5.0-dev
 
@@ -153,12 +152,10 @@ details).
 ```lib/custom.py```. Both a function and a call to that function from
 ```custom.custom_deploy``` should be added.
 
-2. Any custom finalization code should be called from ```lib/custom.py``` in
-```custom.custom_finalize```.
+2. Any custom finalization code should be called from ```lib/custom.py``` in ```custom.custom_finalize```.
 
 3. If additional options need to be added to any of the config file sections,
-they will likely need to be added to the init of the ```Application``` class in
-```lib/application.py```.
+they will likely need to be added to the init of the ```Application``` class in ```lib/application.py```.
 
 4. New generic build processes will need to be added to the ```Application```
 class in ```lib/application.py```. Additionally, the generic utility functions
