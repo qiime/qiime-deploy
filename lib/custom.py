@@ -140,9 +140,15 @@ def deploy_ampliconnoise(app, setup_dir):
     if rc != 0:
         return rc
 
-    # a bad symlink
+    # Certain versions of AmpliconNoise have a bad symlink that needs to be
+    # removed, while other versions do not. We use a try/except structure
+    # instead of using os.path.exists() because broken symlinks will return
+    # False.
     filePath = os.path.join(setup_dir, 'PyroNoiseM/.#Head10.dat')
-    os.remove(filePath)
+    try:
+        os.remove(filePath)
+    except OSError:
+        pass
 
     os.rmdir(app.deploy_dir)
     return util.copytree(setup_dir, app.deploy_dir)
