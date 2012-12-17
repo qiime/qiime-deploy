@@ -288,10 +288,10 @@ def _generate_qiime_config(python_path, deploy_dir, all_apps_to_deploy, log):
     lines.append('cloud_environment\tFalse\n')
     
     #lines for Greengenes files
-    path = deploy_dir + '/gg_otus-4feb2011-release/rep_set/gg_97_otus_4feb2011.fasta'
+    path = deploy_dir + '/gg_12_10_otus-release/rep_set/97_otus.fasta'
     line = 'assign_taxonomy_reference_seqs_fp\t%s\n' % path
     lines.append(line)
-    path = deploy_dir + '/gg_otus-4feb2011-release/taxonomies/greengenes_tax_rdp_train.txt'
+    path = deploy_dir + '/gg_12_10_otus-release/taxonomy/97_otu_taxonomy.txt'
     line = 'assign_taxonomy_id_to_taxonomy_fp\t%s\n' % path
     lines.append(line)
     
