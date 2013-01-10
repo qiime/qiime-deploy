@@ -152,7 +152,7 @@ details).
 __When I run print_qiime_config.py -t, I get a test failure for usearch. How
 can I fix this?__
 
-qiime-deploy cannot install _usearch_ due to licensing restrictions. You can
+_qiime-deploy_ cannot install _usearch_ due to licensing restrictions. You can
 obtain the _usearch_ binary
 [here](http://www.drive5.com/usearch/download.html). Please be sure to download
 the currently supported version for your version of QIIME. If you are using the
