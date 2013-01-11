@@ -147,6 +147,28 @@ If you specify a new directory, you will end up with multiple versions of QIIME
 installed on your system (which is okay; see the section above for more
 details).
 
+## Frequently Asked Questions
+
+__When I run print_qiime_config.py -t, I get a test failure for usearch. How
+can I fix this?__
+
+_qiime-deploy_ cannot install _usearch_ due to licensing restrictions. You can
+obtain the _usearch_ binary
+[here](http://www.drive5.com/usearch/download.html). Please be sure to download
+the currently supported version for your version of QIIME. If you are using the
+latest stable release of QIIME, you can find the required _usearch_ version
+[here](http://qiime.org/install/install.html).
+
+Rename the executable to ```usearch``` and make sure it is somewhere that is in
+your ```PATH``` environment variable. For example:
+
+    mkdir $HOME/bin
+    mv <path to usearch executable> $HOME/bin/usearch
+    echo 'export PATH=$HOME/bin:$PATH' >> $HOME/.bashrc
+    (open a new terminal)
+    usearch --version
+    print_qiime_config.py -t
+
 ## Contributing
 
 1. New applications with custom build types should be added to
