@@ -169,6 +169,21 @@ your ```PATH``` environment variable. For example:
     usearch --version
     print_qiime_config.py -t
 
+__Does _qiime-deploy_ work on 32-bit operating systems?__
+
+No, _qiime-deploy_ only supports 64-bit operating systems. If you run
+_qiime-deploy_ on a 32-bit system, it may correctly install some dependencies,
+but when running ```print_qiime_config.py -t``` to check that your QIIME
+install is functioning, you may receive strange errors similar to the
+following:
+
+    ELF : not found
+    Syntax error: word unexpected (expecting ")")
+    Syntax error: Unterminated quoted string
+
+Upgrading your operating system to 64-bit and rerunning _qiime-deploy_ will
+solve this issue.
+
 ## Contributing
 
 1. New applications with custom build types should be added to
