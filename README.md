@@ -149,8 +149,8 @@ details).
 
 ## Frequently Asked Questions
 
-__When I run print_qiime_config.py -t, I get a test failure for usearch. How
-can I fix this?__
+__When I run ```print_qiime_config.py -t```, I get a test failure for usearch.
+How can I fix this?__
 
 _qiime-deploy_ cannot install _usearch_ due to licensing restrictions. You can
 obtain the _usearch_ binary
@@ -160,10 +160,12 @@ latest stable release of QIIME, you can find the required _usearch_ version
 [here](http://qiime.org/install/install.html).
 
 Rename the executable to ```usearch``` and make sure it is somewhere that is in
-your ```PATH``` environment variable. For example:
+your ```PATH``` environment variable. You also need to ensure that execute
+permissions are set. For example:
 
     mkdir $HOME/bin
     mv <path to usearch executable> $HOME/bin/usearch
+    chmod +x $HOME/bin/usearch
     echo 'export PATH=$HOME/bin:$PATH' >> $HOME/.bashrc
     (open a new terminal)
     usearch --version
