@@ -228,9 +228,6 @@ def deploy_dotur(app, setup_dir):
     return util.copytree(setup_dir, app.deploy_dir)
 
 def _generate_qiime_config(python_path, deploy_dir, all_apps_to_deploy, log):
-    qiime_config_path = os.path.join(deploy_dir, 'qiime_config')
-    log.info('Generating new %s file' % qiime_config_path)
-
     qiime_path = None
     blast_path = None
     blast_data_path = None
@@ -245,6 +242,9 @@ def _generate_qiime_config(python_path, deploy_dir, all_apps_to_deploy, log):
     if not qiime_path:
         # No qiime target so skip.
         return 0
+
+    qiime_config_path = os.path.join(deploy_dir, 'qiime_config')
+    log.info('Generating new %s file' % qiime_config_path)
 
     if not (blast_path and blast_data_path):
         log.error('Missing necessary paths for %s file.' % qiime_config_path)
