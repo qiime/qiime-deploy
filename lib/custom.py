@@ -241,11 +241,13 @@ def _generate_qiime_config(python_path, deploy_dir, all_apps_to_deploy, log):
         if app.name == 'blast':
             blast_path = os.path.join(app.deploy_dir, 'bin/blastall')
             blast_data_path = os.path.join(app.deploy_dir, 'data')
-      
-    if not (qiime_path and \
-            blast_path and \
-            blast_data_path):
-        log.error('Missing necessary path for %s file.' % qiime_config_path)
+
+    if not qiime_path:
+        # No qiime target so skip.
+        return 0
+
+    if not (blast_path and blast_data_path):
+        log.error('Missing necessary paths for %s file.' % qiime_config_path)
         log.error('Skipping generation of %s' % qiime_config_path)
         return 1
 
