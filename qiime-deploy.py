@@ -375,7 +375,8 @@ def main():
     
     deploy_config = config.read_config(opts.configFile)
     if args:
-        deploy_dir = args[0]
+        deploy_dir = os.path.expanduser(args[0])
+        deploy_dir = os.path.abspath(deploy_dir)
         deploy_config.set('global', 'final-deploy-directory', deploy_dir)
 
     try:
