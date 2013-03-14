@@ -91,6 +91,61 @@ def is_app_complete(app_name, app_list):
                 return True
     return False
 
+def get_executable_path(log, deploy_config, exe_deploy_name, exe_name):
+    """Returns a path to an executable.
+
+    If the executable is specified in deploy_config (e.g. 'python-exe' or
+    'r-exe'), that path will be returned. Otherwise, if the executable is being
+    deployed (i.e. there is a target in deploy_config that matches
+    exe_deploy_name), that path will be used instead.
+    
+    Finally, if all else fails, executable_name will simply be returned such
+    that the system's version of the executable will be used (or whatever is
+    set in the user's path).
+    """
+    log.info('Searching for %s...' % exe_name)
+
+    exe_path = None
+    try:
+        exe_path = deploy_config.get('global', '%s-exe' % exe_deploy_name)
+        if exe_path == 'None':
+            exe_path = None
+        else:
+            exe_path = os.path.expanduser(exe_path)
+            log.info('%s-exe specified, using: %s' % (exe_deploy_name,
+                                                      exe_path))
+    except:
+        log.info('%s-exe is not specified.' % exe_deploy_name)
+        exe_path = None
+
+    if not exe_path:
+        # If we have a target in the config file that matches the executable,
+        # use that.
+        if exe_deploy_name in app_sect:
+            log.info('Looks like %s target is being deployed, using that '
+                     'version' % exe_deploy_name)
+            base_dir = deploy_config.get('global', 'final-deploy-directory')
+            exe_version = deploy_config.get(exe_deploy_name, 'version')
+
+            try:
+                release_location = deploy_config.get(exe_deploy_name,
+                                                     'release-location')
+                deploy_type = 'release'
+            except:
+                log.debug('%s has no release-location' % exe_deploy_name)
+                deploy_type = 'repository'
+
+            exe_dir = exe_deploy_name + '-' + exe_version + '-' + deploy_type
+            exe_path = os.path.join(base_dir, exe_dir)
+            exe_path = os.path.join(exe_path, 'bin/%s' % exe_name)
+            log.info('Setting %s: %s' % (exe_name, exe_path))
+        else:
+            log.info('Could not find a %s target, setting \'%s\'' %
+                     (exe_deploy_name, exe_name))
+            exe_path = exe_name
+
+    return exe_path
+
 """
 This is the main thread responsible for deploying all applications and data
 specified in the config file in the appropriate order and making sure
@@ -142,38 +197,10 @@ def deploy_apps(deploy_config, force_remove=False, remove_repos=False):
 
     log.info('Running deploy for data and apps without dependencies.')
 
-    # locate the python exe that we should use for the deploy process (if
-    # required)
-    log.info('Searching for python...')
-    custom_py_exe = None
-    try:
-        custom_py_exe = deploy_config.get('global', 'python-exe')
-        if custom_py_exe == 'None':
-            custom_py_exe = None
-        else:
-            custom_py_exe = os.path.expanduser(custom_py_exe)
-            log.info('python-exe specified, using: %s' % custom_py_exe)
-    except:
-        log.info('python-exe is not specified.')
-        custom_py_exe = None
-    if not custom_py_exe:
-        if 'python' in app_sect:
-            log.info('Looks like python is being deployed, using that version')
-            base_dir = deploy_config.get('global', 'final-deploy-directory')
-            python_version = deploy_config.get('python', 'version')
-            try:
-                release_location = deploy_config.get('python', 'release-location')
-                deploy_type = 'release'
-            except:
-                log.debug('%s has no release-location' % 'python')
-                deploy_type = 'repository'
-            python_dir = 'python-' + python_version + '-' + deploy_type
-            custom_py_exe = os.path.join(base_dir, python_dir)
-            custom_py_exe = os.path.join(custom_py_exe, 'bin/python')
-            log.info('Setting python: %s' % custom_py_exe)
-        else:
-            log.info('Could not find a python, setting \'python\'')
-            custom_py_exe = 'python'
+    # locate the python and r executables that we should use for the deploy
+    # process (if required)
+    custom_py_exe = get_executable_path(log, deploy_config, 'python', 'python')
+    custom_r_exe = get_executable_path(log, deploy_config, 'r', 'R')
 
     # create application objects for all apps to deploy
     all_apps_to_deploy = []
@@ -183,6 +210,7 @@ def deploy_apps(deploy_config, force_remove=False, remove_repos=False):
                                     env,
                                     deploy_config,
                                     custom_py_exe,
+                                    custom_r_exe,
                                     remove_repos)
         remaining_apps_to_deploy.append(a)
         all_apps_to_deploy.append(a)

@@ -18,6 +18,7 @@ class Application:
                  env, 
                  config, 
                  custom_py_exe=None,
+                 custom_r_exe=None,
                  remove_repos=False):
         self.log = logging.getLogger(__name__)
 
