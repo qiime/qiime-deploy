@@ -10,7 +10,7 @@ import tempfile
 """
 The main application class, responsible for getting an application's config
 values and deploying the application. If a new build-type is added to
-app-deploy then this class must be modified to support it.
+qiime-deploy then this class must be modified to support it.
 """
 class Application:
     def __init__(self, 
@@ -30,6 +30,10 @@ class Application:
             self.py_exe = custom_py_exe
         else:
             self.py_exe = 'python'
+        if custom_r_exe:
+            self.r_exe = custom_r_exe
+        else:
+            self.r_exe = 'R'
         self.remove_repos = remove_repos
 
         base_deploy_dir = config.get('global', 'final-deploy-directory')
@@ -71,6 +75,8 @@ class Application:
         except:
             self.log.debug('%s has no repository-options' % name)
             self.repository_options = ""
+        if self.build_type == 'r-package':
+            self.deploy_type = 'r-package'
 
         self.repo_version = None
         if self.deploy_type == 'repository':
@@ -103,6 +109,10 @@ class Application:
         except:
             self.log.debug('%s is not deploying in python site-packages' % name)
             self.py_site_pkgs = False
+
+        if self.build_type == 'r-package':
+            self.package_name = config.get(name, 'package-name')
+            self.package_repo = config.get(name, 'package-repo')
 
         # optional
         if self.deploy_type == 'release':
@@ -467,6 +477,26 @@ class Application:
             rc = util.ant(self.name, self.deploy_dir)
         return rc
 
+    def _deploy_r_package(self):
+        # The first command turns warnings into errors so that we can obtain a
+        # nonzero return code if the download/install fails.
+        cmd  = "echo \"options(warn=2); " + \
+               "install.packages('%s',repos='%s')\" | " + \
+               "%s --slave --vanilla" % (self.package_name,
+                                         self.package_repo,
+                                         self.r_exe)
+        (rc, output) = commands.getstatusoutput(cmd)
+
+        if rc == 0:
+            app.log.debug('%s r-package install succeeded' % self.package_name)
+            return 0
+        else:
+            app.log.error('Failed to install %s r-package from %s' %
+                          (self.package_name, self.package_repo))
+            app.log.debug('r packages failed, return code: %s' % rc)
+            app.log.debug('Output: %s' % output)
+            return 1
+
     def _update_env(self):
         for rel_path in self.rel_path_dirs:
             self.log.debug('Adding to PATH: %s' % rel_path)
@@ -513,7 +543,7 @@ class Application:
             os.makedirs(self.deploy_dir)
 
         # download to tmp_dir
-        if self._download() != 0:
+        if self.build_type != 'r-package' and self._download() != 0:
             self.log.error('%s download failed.' % self.name)
             return self._terminate(1)
 
@@ -538,7 +568,7 @@ class Application:
                 return self._terminate(1)
             else:
                 self.log.debug('The unzipped directory exists: %s' % setup_dir)
-        else:
+        elif self.deploy_type == 'repository':
             setup_dir = os.path.join(self.tmp_dir, self.repository_local_name)
 
         # build
@@ -561,13 +591,15 @@ class Application:
             rc = self._deploy_do_copy(setup_dir)
         elif self.build_type == 'ant':
             rc = self._deploy_ant(setup_dir)
+        elif self.build_type == 'r-package':
+            rc = self._deploy_r_package()
         else:
             self.log.error('Unrecognized build type: %s' % self.build_type)
             return self._terminate(1)
 
         # actions to complete if the deploy was successful
         if rc == 0:
-            if self.cp_src_dir:
+            if self.build_type != 'r-package' and self.cp_src_dir:
                 rc = util.recursive_copy_all_files(setup_dir, self.deploy_dir)
             if self.repo_version and self.remove_repos:
                 self._delete_previous_repo_versions()
