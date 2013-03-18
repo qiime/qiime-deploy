@@ -488,14 +488,14 @@ class Application:
         (rc, output) = commands.getstatusoutput(cmd)
 
         if rc == 0:
-            app.log.debug('%s r-package install succeeded' %
-                          self.r_package_name)
+            self.log.debug('%s r-package install succeeded' %
+                           self.r_package_name)
             return 0
         else:
-            app.log.error('Failed to install %s r-package from %s' %
-                          (self.r_package_name, self.r_package_repo))
-            app.log.debug('r packages failed, return code: %s' % rc)
-            app.log.debug('Output: %s' % output)
+            self.log.error('Failed to install %s r-package from %s' %
+                           (self.r_package_name, self.r_package_repo))
+            self.log.debug('r packages failed, return code: %s' % rc)
+            self.log.debug('Output: %s' % output)
             return 1
 
     def _update_env(self):
