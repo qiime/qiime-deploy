@@ -111,8 +111,8 @@ class Application:
             self.py_site_pkgs = False
 
         if self.build_type == 'r-package':
-            self.package_name = config.get(name, 'package-name')
-            self.package_repo = config.get(name, 'package-repo')
+            self.r_package_name = config.get(name, 'r-package-name')
+            self.r_package_repo = config.get(name, 'r-package-repo')
 
         # optional
         if self.deploy_type == 'release':
@@ -482,17 +482,18 @@ class Application:
         # nonzero return code if the download/install fails.
         cmd  = "echo \"options(warn=2); " + \
                "install.packages('%s',repos='%s')\" | " + \
-               "%s --slave --vanilla" % (self.package_name,
-                                         self.package_repo,
+               "%s --slave --vanilla" % (self.r_package_name,
+                                         self.r_package_repo,
                                          self.r_exe)
         (rc, output) = commands.getstatusoutput(cmd)
 
         if rc == 0:
-            app.log.debug('%s r-package install succeeded' % self.package_name)
+            app.log.debug('%s r-package install succeeded' %
+                          self.r_package_name)
             return 0
         else:
             app.log.error('Failed to install %s r-package from %s' %
-                          (self.package_name, self.package_repo))
+                          (self.r_package_name, self.r_package_repo))
             app.log.debug('r packages failed, return code: %s' % rc)
             app.log.debug('Output: %s' % output)
             return 1
