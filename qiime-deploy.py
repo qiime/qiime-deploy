@@ -91,7 +91,8 @@ def is_app_complete(app_name, app_list):
                 return True
     return False
 
-def get_executable_path(log, deploy_config, exe_deploy_name, exe_name):
+def get_executable_path(log, deploy_config, app_sect, exe_deploy_name,
+                        exe_name):
     """Returns a path to an executable.
 
     If the executable is specified in deploy_config (e.g. 'python-exe' or
@@ -199,8 +200,9 @@ def deploy_apps(deploy_config, force_remove=False, remove_repos=False):
 
     # locate the python and r executables that we should use for the deploy
     # process (if required)
-    custom_py_exe = get_executable_path(log, deploy_config, 'python', 'python')
-    custom_r_exe = get_executable_path(log, deploy_config, 'r', 'R')
+    custom_py_exe = get_executable_path(log, deploy_config, app_sect, 'python',
+                                        'python')
+    custom_r_exe = get_executable_path(log, deploy_config, app_sect, 'r', 'R')
 
     # create application objects for all apps to deploy
     all_apps_to_deploy = []
