@@ -481,7 +481,8 @@ class Application:
         # The first command turns warnings into errors so that we can obtain a
         # nonzero return code if the download/install fails.
         cmd  = ("echo \"options(warn=2); "
-                "install.packages('%s',repos='%s')\" | "
+                "install.packages('%s',repos='%s',"
+                "INSTALL_opts=c('--pkglock'))\" | "
                 "%s --slave --vanilla" % (self.r_package_name,
                                           self.r_package_repo,
                                           self.r_exe))
