@@ -480,11 +480,11 @@ class Application:
     def _deploy_r_package(self):
         # The first command turns warnings into errors so that we can obtain a
         # nonzero return code if the download/install fails.
-        cmd  = "echo \"options(warn=2); " + \
-               "install.packages('%s',repos='%s')\" | " + \
-               "%s --slave --vanilla" % (self.r_package_name,
-                                         self.r_package_repo,
-                                         self.r_exe)
+        cmd  = ("echo \"options(warn=2); "
+                "install.packages('%s',repos='%s')\" | "
+                "%s --slave --vanilla" % (self.r_package_name,
+                                          self.r_package_repo,
+                                          self.r_exe))
         (rc, output) = commands.getstatusoutput(cmd)
 
         if rc == 0:
