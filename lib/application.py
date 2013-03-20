@@ -77,15 +77,22 @@ class Application:
             self.repository_options = ""
         try:
             self.local_repository = config.get(name, 'local-repository')
+
             if self.local_repository.strip() == 'yes':
                 self.log.debug('%s is using a local repository' % name)
                 self.local_repository = True
 
-                # Clean up the local repository path.
-                # TODO finish
+                # Clean up the local repository path and extract the basename-
+                # we'll use this as the "repository-local-name" since we're not
+                # doing a clone/checkout into a directory.
                 self.repository_location = \
                         os.path.normpath(self.repository_location)
-                self.repository_local_name = os.path.basename()
+                self.repository_location = \
+                        os.path.expanduser(self.repository_location)
+                self.repository_location = \
+                        os.path.abspath(self.repository_location)
+                self.repository_local_name = \
+                        os.path.basename(self.repository_location)
             else:
                 self.log.debug('%s is not using a local repository' % name)
                 self.local_repository = False
