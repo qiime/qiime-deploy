@@ -322,7 +322,9 @@ class Application:
         else:
             if self.local_repository:
                 # Copy local repository into tmp_dir.
-                rc = util.copytree(self.repository_location, self.tmp_dir)
+                rc = util.copytree(self.repository_location,
+                                   os.path.join(self.tmp_dir,
+                                                self.repository_local_name))
             else:
                 if self.repository_type == 'svn':
                     rc = util.svn_checkout(self.repository_location,
