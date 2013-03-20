@@ -75,6 +75,31 @@ class Application:
         except:
             self.log.debug('%s has no repository-options' % name)
             self.repository_options = ""
+        try:
+            self.local_repository = config.get(name, 'local-repository')
+
+            if self.local_repository.strip() == 'yes':
+                self.log.debug('%s is using a local repository' % name)
+                self.local_repository = True
+
+                # Clean up the local repository path and extract the basename-
+                # we'll use this as the "repository-local-name" since we're not
+                # doing a clone/checkout into a directory.
+                self.repository_location = \
+                        os.path.normpath(self.repository_location)
+                self.repository_location = \
+                        os.path.expanduser(self.repository_location)
+                self.repository_location = \
+                        os.path.abspath(self.repository_location)
+                self.repository_local_name = \
+                        os.path.basename(self.repository_location)
+            else:
+                self.log.debug('%s is not using a local repository' % name)
+                self.local_repository = False
+        except:
+            self.log.debug('%s has no local-repository' % name)
+            self.local_repository = False
+
         if self.build_type == 'r-package':
             self.deploy_type = 'r-package'
 
@@ -295,17 +320,23 @@ class Application:
                                     self.tmp_dir,
                                     self.release_file_name)
         else:
-            if self.repository_type == 'svn':
-                rc = util.svn_checkout(self.repository_location,
-                                       self.tmp_dir,
-                                       self.repository_local_name,
-                                       self.repository_options)
-            elif self.repository_type == 'git':
-                rc = util.git_clone(self.repository_location,
-                                    self.tmp_dir,
-                                    self.repository_local_name,
-                                    self.repository_options)
-                                   
+            if self.local_repository:
+                # Copy local repository into tmp_dir.
+                rc = util.copytree(self.repository_location,
+                                   os.path.join(self.tmp_dir,
+                                                self.repository_local_name))
+            else:
+                if self.repository_type == 'svn':
+                    rc = util.svn_checkout(self.repository_location,
+                                           self.tmp_dir,
+                                           self.repository_local_name,
+                                           self.repository_options)
+                elif self.repository_type == 'git':
+                    rc = util.git_clone(self.repository_location,
+                                        self.tmp_dir,
+                                        self.repository_local_name,
+                                        self.repository_options)
+
         return rc
 
     def _copy_dir(self, setup_dir):
