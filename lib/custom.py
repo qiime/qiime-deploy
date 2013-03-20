@@ -79,37 +79,6 @@ def deploy_uclust(app, setup_dir):
             return 0
     return 1
 
-def deploy_r(app, setup_dir):
-    rc = app._deploy_autoconf(setup_dir)
-
-    if rc != 0:
-        return 1
-
-    # hack for qiime requirements, but that's pretty much this whole file
-    # packages an array of ['pkgname','repository'] 
-    packages = [['randomForest','http://cran.r-project.org'],
-                ['optparse','http://cran.r-project.org'],
-                ['vegan','http://cran.r-project.org'],
-                ['ape','http://cran.r-project.org'],
-                ['MASS','http://cran.r-project.org'],
-                ['gtools','http://cran.r-project.org'],
-                ['klaR','http://cran.r-project.org'],
-                ['RColorBrewer','http://cran.r-project.org']]
-    for pkg in packages:
-        r_exe = os.path.join(app.deploy_dir, 'bin/R')
-        makeStr  = "echo \"install.packages('%s',repos='%s')\" | %s --slave --vanilla" % (pkg[0],pkg[1],r_exe)
-        (makeStatus, makeOut) = commands.getstatusoutput(makeStr)
-        if makeStatus == 0:
-            app.log.debug('deploy r %s packages install succeeded' % pkg[0]) 
-        else:
-            app.log.error('Failed to install %s r package from %s' % (pkg[0],pkg[1]))
-            app.log.debug('r packages failed, return code: ' + \
-                     '%s' % makeStatus)
-            app.log.debug('Output: %s' % makeOut)
-            return 1
-            
-    return 0
-
 def deploy_pyronoise(app, setup_dir):
     srcDir = os.path.join(setup_dir, 'FDist')
     rc = util.make('pyronoise2/FDist', srcDir)
@@ -323,8 +292,6 @@ def custom_deploy(app, setup_dir):
         return deploy_denoiser(app, setup_dir)
     elif app.name == 'uclust':
         return deploy_uclust(app, setup_dir)
-    elif app.name == 'r':
-        return deploy_r(app, setup_dir)
     elif app.name == 'pyronoise':
         return deploy_pyronoise(app, setup_dir)
     elif app.name == 'ampliconnoise':
