@@ -68,6 +68,42 @@ It's therefore best to run this command before the following step.
  
         sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient18 libmysqlclient-dev ghc
 
+## Setting up qiime-deploy on CentOS and RedHat
+
+Below is the summary of steps required for running _qiime-deploy_ on CentOS and RedHat (tested on CentOS 6.4):
+
+1. Add the following repositories to your yum configuration directory (required to intall ZeroMQ):
+    
+    For RHEL/CentOS 6: 
+    
+        http://download.opensuse.org/repositories/home:/fengshuo:/zeromq/CentOS_CentOS-6/home:fengshuo:zeromq.repo
+
+    This can be done by creating a file in /etc/yum.repos.d/, e.g., named zeromq.repo (requires admin (sudo) access). You can use your favorite text editor but we suggest _pico_ for simplicity. Note that at the bottom of the screen you will have the commands to save, exit, etc.
+
+        sudo pico /etc/yum.repos.d/zeromq.repo
+
+    Paste the following into that file:
+
+    For RHEL/CentOS 6:
+    
+        [home_fengshuo_zeromq]
+        name=The latest stable of zeromq builds (CentOS_CentOS-6)
+        type=rpm-md
+        baseurl=http://download.opensuse.org/repositories/home:/fengshuo:/zeromq/CentOS_CentOS-6/
+        gpgcheck=1
+        gpgkey=http://download.opensuse.org/repositories/home:/fengshuo:/zeromq/CentOS_CentOS-6/repodata/repomd.xml.key
+        enabled=1
+
+    Save and exit that file. Added repository will be used in the next step.
+
+2. Install the _qiime-deploy_ dependencies on your machine. These steps require
+admin (sudo) access. If you do not have sudo access, you must ask your system
+administrator to grant you sudo access, or to run these commands for you.
+        
+        sudo yum groupinstall -y "development tools"
+
+        sudo yum install -y ant compat-gcc-34-g77 java-1.6.0-openjdk java-1.6.0-openjdk-devel freetype freetype-devel zlib-devel mpich2 readline-devel zeromq zeromq-devel gsl gsl-devel libxslt libpng libpng-devel libgfortran mysql mysql-devel libXt libXt-devel libX11-devel mpich2 mpich2-devel libxml2 xorg-x11-server-Xorg dejavu* python-devel
+
 ## Common usage examples
 
 The following subsections include examples of common _qiime-deploy_ use cases.
