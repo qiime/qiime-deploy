@@ -108,8 +108,8 @@ administrator to grant you sudo access, or to run these commands for you.
 
 The following subsections include examples of common _qiime-deploy_ use cases.
 
-__Note:__ At the time of this writing, QIIME 1.6.0 is the latest public
-release, and QIIME 1.6.0-dev is the development version of QIIME. As newer
+__Note:__ At the time of this writing, QIIME 1.7.0 is the latest public
+release, and QIIME 1.7.0-dev is the development version of QIIME. As newer
 versions of QIIME are released we will include conf files for each new version
 in the
 [qiime-deploy-conf project](https://github.com/qiime/qiime-deploy-conf). The
@@ -124,9 +124,9 @@ command:
 
     python qiime-deploy.py -h
 
-### Installing QIIME 1.6.0 (stable public release)
+### Installing QIIME 1.7.0 (stable public release)
 
-To install QIIME 1.6.0 under ```$HOME/qiime_software/```, run the following
+To install QIIME 1.7.0 under ```$HOME/qiime_software/```, run the following
 commands. These commands assume you have already set up your system following
 the directions above and that you are in your home directory. You can change
 these paths as you like (e.g. to install QIIME under a different directory),
@@ -135,7 +135,7 @@ but you will need to modify the commands we provide to use the new paths.
     git clone git://github.com/qiime/qiime-deploy.git
     git clone git://github.com/qiime/qiime-deploy-conf.git
     cd qiime-deploy/
-    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-1.6.0/qiime.conf --force-remove-failed-dirs
+    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-1.7.0/qiime.conf --force-remove-failed-dirs
     source $HOME/.bashrc
 
 To test that you have a functioning QIIME install, run the following command:
@@ -149,24 +149,24 @@ free to do so. If you rerun _qiime-deploy_ using the same deploy directory (in
 this example, ```$HOME/qiime_software/```), your old QIIME config will be
 renamed to ```qiime_config.bak``` and the new one will be named ```qiime_config```.
 
-### Installing QIIME 1.6.0-dev
+### Installing QIIME 1.7.0-dev
 
-To install the development version of QIIME (currently 1.6.0-dev), use the same
+To install the development version of QIIME (currently 1.7.0-dev), use the same
 commands as above, but supply a different _qiime-deploy_ conf file as input:
 
-    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-1.6.0-dev/qiime.conf --force-remove-failed-dirs --force-remove-previous-repos
+    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-1.7.0-dev/qiime.conf --force-remove-failed-dirs --force-remove-previous-repos
 
 ### Installing multiple versions of QIIME
 
 You may install more than one version of QIIME on your system. To do so, you
 will need to install each version in its own deploy directory. For example, if
-you would like to have QIIME 1.6.0 and QIIME 1.6.0-dev, you could install
-QIIME 1.6.0 under ```$HOME/qiime-1.6.0/``` and QIIME 1.6.0-dev under
-```$HOME/qiime-1.6.0-dev/```. To activate the QIIME version that you would like
+you would like to have QIIME 1.7.0 and QIIME 1.7.0-dev, you could install
+QIIME 1.7.0 under ```$HOME/qiime-1.7.0/``` and QIIME 1.7.0-dev under
+```$HOME/qiime-1.7.0-dev/```. To activate the QIIME version that you would like
 to use, ```source``` the appropriate ```activate.sh``` file. For example, to
-activate QIIME 1.6.0-dev, you would run the following command:
+activate QIIME 1.7.0-dev, you would run the following command:
 
-    source $HOME/qiime-1.6.0-dev/activate.sh
+    source $HOME/qiime-1.7.0-dev/activate.sh
 
 If you are unsure of what version of QIIME you currently have activated, run
 the following command:
