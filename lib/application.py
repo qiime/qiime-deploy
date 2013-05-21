@@ -509,6 +509,10 @@ class Application:
         return rc
 
     def _deploy_r_package(self):
+        # R requires that we're in a directory that exists because it does some
+        # shell initialization before installing the package.
+        os.chdir(self.deploy_dir)
+
         # The first command turns warnings into errors so that we can obtain a
         # nonzero return code if the download/install fails.
         cmd  = ("echo \"options(warn=2); "
