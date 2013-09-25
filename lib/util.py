@@ -358,6 +358,8 @@ def gnu_autoconf(appName, setupDir, deployDir, customConf=None, customMake=None,
         customConf = ''
     if not customMake:
         customMake = ''
+    if not customMakeInstall:
+        customMakeInstall = ''
     log.info('Configuring %s' % appName)
     os.chdir(setupDir)
     configureStr = setupDir + '/configure --prefix=' + \
