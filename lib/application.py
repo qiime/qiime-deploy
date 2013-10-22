@@ -183,6 +183,12 @@ class Application:
             self.ac_make_opts = None
 
         try:
+            self.ac_make_install_opts = config.get(name, 'autoconf-make-install-options')
+        except:
+            self.log.debug('%s has no autoconf-make-install-options' % name)
+            self.ac_make_install_opts = None
+
+        try:
             self.make_opts = config.get(name, 'make-options')
         except:
             self.log.debug('%s has no make-options' % name)
@@ -355,7 +361,8 @@ class Application:
                                setup_dir,
                                self.deploy_dir,
                                self.ac_config_opts,
-                               self.ac_make_opts)
+                               self.ac_make_opts,
+                               self.ac_make_install_opts)
         if rc != 0:
             self.log.error('Problem deploying %s.' % self.name)
             return 1

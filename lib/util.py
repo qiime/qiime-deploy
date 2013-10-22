@@ -353,11 +353,13 @@ def make(appName, srcDir, extraOpt=None):
         return 1
     return 0
 
-def gnu_autoconf(appName, setupDir, deployDir, customConf=None, customMake=None):
+def gnu_autoconf(appName, setupDir, deployDir, customConf=None, customMake=None, customMakeInstall=None):
     if not customConf:
         customConf = ''
     if not customMake:
         customMake = ''
+    if not customMakeInstall:
+        customMakeInstall = ''
     log.info('Configuring %s' % appName)
     os.chdir(setupDir)
     configureStr = setupDir + '/configure --prefix=' + \
@@ -389,7 +391,7 @@ def gnu_autoconf(appName, setupDir, deployDir, customConf=None, customMake=None)
 
     log.info('Installing %s' % appName)
     os.chdir(setupDir)
-    makeiStr = 'make install'
+    makeiStr = 'make install %s' % customMakeInstall
     log.debug('EXE: %s' % makeiStr)
     (makeiStatus, makeiOut) = commands.getstatusoutput(makeiStr)
     if makeiStatus == 0:
