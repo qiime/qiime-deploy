@@ -181,6 +181,19 @@ def copytree(srcDir, destDir):
     log.debug('Copying %s to %s' % (srcDir, destDir))
     try:
         shutil.copytree(srcDir, destDir)
+    except shutil.Error, e:
+        # Taken and modified from:
+        # https://mail.python.org/pipermail/python-bugs-list/2010-April/097195.html
+        for src, dst, error in e.args[0]:
+            if not os.path.islink(src):
+                return 1
+            else:
+                linkto = os.readlink(src)
+                if os.path.exists(linkto):
+                    return 1
+                else:
+                    # dangling symlink found.. ignoring..
+                    pass
     except:
         return 1
     return 0
