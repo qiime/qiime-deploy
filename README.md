@@ -160,8 +160,7 @@ input:
 **Note:** The latest development version of a project will always reside under
 a directory suffixed with ```-dev```. For example, the latest development
 version of QIIME will always be under ```qiime-deploy-conf/qiime-dev/```, and
-the latest development version of PyCogent will be under
-```qiime-deploy-conf/pycogent-dev/```.
+the latest development version of PyCogent will be under ```qiime-deploy-conf/pycogent-dev/```.
 
 ### Installing multiple versions of QIIME
 
