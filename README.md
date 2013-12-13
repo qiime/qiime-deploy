@@ -151,10 +151,16 @@ renamed to ```qiime_config.bak``` and the new one will be named ```qiime_config`
 
 ### Installing QIIME 1.8.0-dev
 
-To install the development version of QIIME (currently 1.8.0-dev), use the same
-commands as above, but supply a different _qiime-deploy_ conf file as input:
+To install the latest development version of QIIME (currently 1.8.0-dev), use
+the same commands as above, but supply a different _qiime-deploy_ conf file as
+input:
 
-    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-1.8.0-dev/qiime.conf --force-remove-failed-dirs --force-remove-previous-repos
+    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-dev/qiime.conf --force-remove-failed-dirs --force-remove-previous-repos
+
+**Note:** The latest development version of a project will always reside under
+a directory suffixed with ```-dev```. For example, the latest development
+version of QIIME will always be under ```qiime-deploy-conf/qiime-dev/```, and
+the latest development version of PyCogent will be under ```qiime-deploy-conf/pycogent-dev/```.
 
 ### Installing multiple versions of QIIME
 
