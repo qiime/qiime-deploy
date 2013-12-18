@@ -21,7 +21,7 @@ following packages:
     libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git
     subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2
     libreadline-dev gfortran unzip libmysqlclient16 libmysqlclient-dev ghc
-    python-dev libncurses5-dev
+    python-dev libncurses5-dev libbz2-dev
 
 After the deploy completes it will generate an ```activate.sh``` file in the
 base deploy directory. It is necessary to ```source``` that file in order to
@@ -62,11 +62,11 @@ It's therefore best to run this command before the following step.
 
     For Ubuntu 11.10:
 
-        sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient16 libmysqlclient-dev ghc sqlite3 libsqlite3-dev torque-client
+        sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient16 libmysqlclient-dev ghc sqlite3 libsqlite3-dev torque-client libbz2-dev
 
     For Ubuntu 12.04:
  
-        sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient18 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libc6-i386 torque-client
+        sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient18 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libc6-i386 torque-client libbz2-dev
 
 ## Setting up qiime-deploy on CentOS and RedHat
 
