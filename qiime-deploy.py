@@ -331,6 +331,14 @@ def deploy_apps(deploy_config, force_remove=False, remove_repos=False):
             summary += '\n'
     summary += '\n'
 
+    # Set up the location of the QIIME config file, as we need an environment
+    # variable to point to it in the activation script.
+    qiime_config_env_var = 'QIIME_CONFIG_FP'
+    qiime_config_path = os.path.join(deploy_dir, 'qiime_config')
+    log.debug('Adding to environment: %s=%s' % (qiime_config_env_var,
+                                                qiime_config_path))
+    env.update_env_var(qiime_config_env_var, qiime_config_path)
+
     # build and write out activate.sh
     log.debug('Writing new environment variables to activate.sh')
     log.debug('Print environment: %s' % env.get_print_env())
@@ -360,7 +368,8 @@ def deploy_apps(deploy_config, force_remove=False, remove_repos=False):
 
     # run any custom finalization code, in QIIME's case, this is where
     # the QIIME config file is generated and written
-    rc = custom.custom_finalize(custom_py_exe, deploy_dir, all_apps_to_deploy, log)
+    rc = custom.custom_finalize(custom_py_exe, deploy_dir, all_apps_to_deploy,
+                                log, qiime_config_path)
 
     sys.stdout.write(summary)
     if failed_items:

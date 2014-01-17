@@ -151,8 +151,18 @@ renamed to ```qiime_config.bak``` and the new one will be named ```qiime_config`
 
 ### Installing QIIME 1.8.0-dev
 
-To install the latest development version of QIIME (currently 1.8.0-dev), use
-the same commands as above, but supply a different _qiime-deploy_ conf file as
+Now that QIIME can be [installed via pip](http://qiime.org/install/install.html#installing-qiime-via-pip),
+this is the recommended method of installing QIIME and its Python dependencies.
+Thus, the installation process for the latest development version of QIIME
+(currently 1.8.0-dev) differs from that of the latest QIIME release.
+
+To install the latest development version of QIIME, run the following commands:
+
+    pip install numpy==1.7.1
+    pip install git+git://github.com/qiime/qiime.git
+
+Finally, run _qiime-deploy_ to install the remaining non-Python dependencies
+required by QIIME. Note that we supply a different _qiime-deploy_ conf file as
 input:
 
     python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-dev/qiime.conf --force-remove-failed-dirs --force-remove-previous-repos
