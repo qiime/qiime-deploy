@@ -70,6 +70,11 @@ class Application:
         except:
             self.log.debug('%s has no repository-local-name' % name)
             self.repository_local_name = None
+        try: 
+            self.make_folderpath_relative_to_local = config.get(name, 'make-folderpath-relative-to-local')
+        except:
+            self.log.debug('%s has no make-folderpath-relative-to-local' % name)
+            self.make_folderpath_relative_to_local = None
         try:
             self.repository_options = config.get(name, 'repository-options')
         except:
@@ -613,7 +618,12 @@ class Application:
             else:
                 self.log.debug('The unzipped directory exists: %s' % setup_dir)
         elif self.deploy_type == 'repository':
-            setup_dir = os.path.join(self.tmp_dir, self.repository_local_name)
+            # make_folderpath_relative_to_local can also be added to 'release'
+            # when software requiring this option are deployed 
+            if self.make_folderpath_relative_to_local is not None:
+                setup_dir = os.path.join(self.tmp_dir, self.make_folderpath_relative_to_local)
+            else:
+                setup_dir = os.path.join(self.tmp_dir, self.repository_local_name)
 
         # build
         rc = 0
