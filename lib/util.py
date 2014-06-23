@@ -218,7 +218,7 @@ def svn_checkout(URL, destDir, localFileName, repoOpt):
     log.info('Checking out %s' % URL)
     os.chdir(destDir)
     downloadDir = os.path.join(destDir, localFileName)
-    svnStr = 'svn co %s %s %s' % (repoOpt, URL, downloadDir)
+    svnStr = 'echo t | svn co %s %s %s' % (repoOpt, URL, downloadDir)
     log.debug('EXE: %s' % svnStr)
     (svnStatus, svnOut) = commands.getstatusoutput(svnStr)
     if svnStatus == 0:
