@@ -608,6 +608,8 @@ class Application:
             if self.unzipped_name:
                 self.log.debug('Using specified unzipped name: %s' % self.unzipped_name)
                 setup_dir = os.path.join(self.tmp_dir, self.unzipped_name)
+                if self.make_folderpath_relative_to_local is not None:
+                    setup_dir = os.path.join(setup_dir, self.make_folderpath_relative_to_local)
             else:
                 self.log.debug('Using tmp directory name: %s' % self.tmp_dir)
                 setup_dir = self.tmp_dir
@@ -618,8 +620,6 @@ class Application:
             else:
                 self.log.debug('The unzipped directory exists: %s' % setup_dir)
         elif self.deploy_type == 'repository':
-            # make_folderpath_relative_to_local can also be added to 'release'
-            # when software requiring this option are deployed 
             if self.make_folderpath_relative_to_local is not None:
                 setup_dir = os.path.join(self.tmp_dir, self.make_folderpath_relative_to_local)
             else:
