@@ -132,7 +132,7 @@ def deploy_sortmerna(app, setup_dir):
         touch configure.ac aclocal.m4 configure \
             Makefile.am Makefile.in
        to overcome the timestamp issues associated
-       with cloning software using autoconf.
+       with cloning software which use autoconf.
     """
     customConf = app.ac_config_opts
     if not customConf:
