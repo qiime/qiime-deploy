@@ -3,6 +3,9 @@ from lib import util
 import commands
 import os
 import stat
+import logging
+
+log = logging.getLogger(__name__)
 
 """
 If additional applications are added to the config file with the build-type
@@ -123,18 +126,28 @@ def deploy_ampliconnoise(app, setup_dir):
     return util.copytree(setup_dir, app.deploy_dir)
 
 def deploy_sortmerna(app, setup_dir):
-    if not app.ac_config_opts:
+    """Deploy SortMeRNA by calling package-distributed build.sh
+       which will execute configure, touch command and make.
+       The touch command is (order-specific):
+        touch configure.ac aclocal.m4 configure \
+            Makefile.am Makefile.in
+       to overcome the timestamp issues associated
+       with cloning software using autoconf.
+    """
+    customConf = app.ac_config_opts
+    if not customConf:
         customConf = ''
-    if not app.ac_make_install_opts:
+    customMakeInstall = app.ac_make_install_opts
+    if not customMakeInstall:
         customMakeInstall = ''
     deployDir = app.deploy_dir
     appName = app.name
 
     # run build.sh (contains configure, touch commands and make)
-    os.chdir(setupDir)
-    log.info('Building %s' % app.appName)
-    buildStr = setupDir + '/build.sh --prefix=' + \
-                   '%s %s' % (app.deployDir, app.customConf)
+    os.chdir(setup_dir)
+    log.info('Building %s' % appName)
+    buildStr = setup_dir + '/build.sh --prefix=' + \
+                   '%s %s' % (deployDir, customConf)
     log.debug('EXE: %s' % buildStr)
     (confStatus, confOut) = commands.getstatusoutput(buildStr)
     if confStatus == 0:
@@ -148,7 +161,7 @@ def deploy_sortmerna(app, setup_dir):
 
     # run make install
     log.info('Installing %s' % appName)
-    os.chdir(setupDir)
+    os.chdir(setup_dir)
     makeiStr = 'make install %s' % customMakeInstall
     log.debug('EXE: %s' % makeiStr)
     (makeiStatus, makeiOut) = commands.getstatusoutput(makeiStr)
