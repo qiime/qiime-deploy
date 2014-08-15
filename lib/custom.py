@@ -125,7 +125,7 @@ def deploy_ampliconnoise(app, setup_dir):
 def deploy_sortmerna(app, setup_dir):
     if not app.ac_config_opts:
         customConf = ''
-    if not self.ac_make_install_opts:
+    if not app.ac_make_install_opts:
         customMakeInstall = ''
     deployDir = app.deploy_dir
     appName = app.name
