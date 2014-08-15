@@ -122,6 +122,46 @@ def deploy_ampliconnoise(app, setup_dir):
     os.rmdir(app.deploy_dir)
     return util.copytree(setup_dir, app.deploy_dir)
 
+def deploy_sortmerna(app, setup_dir):
+    if not app.ac_config_opts:
+        customConf = ''
+    if not self.ac_make_install_opts:
+        customMakeInstall = ''
+    deployDir = app.deploy_dir
+    appName = app.name
+
+    # run build.sh (contains configure, touch commands and make)
+    os.chdir(setupDir)
+    log.info('Building %s' % app.appName)
+    buildStr = setupDir + '/build.sh --prefix=' + \
+                   '%s %s' % (app.deployDir, app.customConf)
+    log.debug('EXE: %s' % buildStr)
+    (confStatus, confOut) = commands.getstatusoutput(buildStr)
+    if confStatus == 0:
+        log.debug(appName + ' build succeeded')
+    else:
+        log.error('Failed to build ' + appName)
+        log.debug(appName + ' build failed, return code: ' + \
+                     '%s' % confStatus)
+        log.debug('Output: %s' % confOut)
+        return 1
+
+    # run make install
+    log.info('Installing %s' % appName)
+    os.chdir(setupDir)
+    makeiStr = 'make install %s' % customMakeInstall
+    log.debug('EXE: %s' % makeiStr)
+    (makeiStatus, makeiOut) = commands.getstatusoutput(makeiStr)
+    if makeiStatus == 0:
+        log.debug(appName + ' make install succeeded')
+    else:
+        log.error('Failed to install ' + appName)
+        log.debug(appName + ' make install failed, return code: ' + \
+                     '%s' % makeiStatus)
+        log.debug('Output: %s' % makeiOut)
+        return 1
+    return 0
+
 def deploy_vienna(app, setup_dir):
     # a hack to add a header file
     srcFile = os.path.join(setup_dir, 'RNAforester/src/rnafuncs.cpp')
@@ -309,6 +349,8 @@ def custom_deploy(app, setup_dir):
         return deploy_vienna(app, setup_dir)
     elif app.name == 'pysparse':
         return deploy_pysparse(app, setup_dir)
+    elif app.name == 'sortmerna':
+        return deploy_sortmerna(app, setup_dir)
     app.log.error('Unrecognized application: %s' % app.name)
     return 1
 
