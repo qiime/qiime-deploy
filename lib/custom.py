@@ -3,6 +3,9 @@ from lib import util
 import commands
 import os
 import stat
+import logging
+
+log = logging.getLogger(__name__)
 
 """
 If additional applications are added to the config file with the build-type
@@ -121,6 +124,56 @@ def deploy_ampliconnoise(app, setup_dir):
 
     os.rmdir(app.deploy_dir)
     return util.copytree(setup_dir, app.deploy_dir)
+
+def deploy_sortmerna(app, setup_dir):
+    """Deploy SortMeRNA by calling package-distributed build.sh
+       which will execute configure, touch command and make.
+       The touch command is (order-specific):
+        touch configure.ac aclocal.m4 configure \
+            Makefile.am Makefile.in
+       to overcome the timestamp issues associated
+       with cloning software which use autoconf.
+    """
+    customConf = app.ac_config_opts
+    if not customConf:
+        customConf = ''
+    customMakeInstall = app.ac_make_install_opts
+    if not customMakeInstall:
+        customMakeInstall = ''
+    deployDir = app.deploy_dir
+    appName = app.name
+
+    # run build.sh (contains configure, touch commands and make)
+    os.chdir(setup_dir)
+    log.info('Building %s' % appName)
+    buildStr = setup_dir + '/build.sh --prefix=' + \
+                   '%s %s' % (deployDir, customConf)
+    log.debug('EXE: %s' % buildStr)
+    (confStatus, confOut) = commands.getstatusoutput(buildStr)
+    if confStatus == 0:
+        log.debug(appName + ' build succeeded')
+    else:
+        log.error('Failed to build ' + appName)
+        log.debug(appName + ' build failed, return code: ' + \
+                     '%s' % confStatus)
+        log.debug('Output: %s' % confOut)
+        return 1
+
+    # run make install
+    log.info('Installing %s' % appName)
+    os.chdir(setup_dir)
+    makeiStr = 'make install %s' % customMakeInstall
+    log.debug('EXE: %s' % makeiStr)
+    (makeiStatus, makeiOut) = commands.getstatusoutput(makeiStr)
+    if makeiStatus == 0:
+        log.debug(appName + ' make install succeeded')
+    else:
+        log.error('Failed to install ' + appName)
+        log.debug(appName + ' make install failed, return code: ' + \
+                     '%s' % makeiStatus)
+        log.debug('Output: %s' % makeiOut)
+        return 1
+    return 0
 
 def deploy_vienna(app, setup_dir):
     # a hack to add a header file
@@ -309,6 +362,8 @@ def custom_deploy(app, setup_dir):
         return deploy_vienna(app, setup_dir)
     elif app.name == 'pysparse':
         return deploy_pysparse(app, setup_dir)
+    elif app.name == 'sortmerna':
+        return deploy_sortmerna(app, setup_dir)
     app.log.error('Unrecognized application: %s' % app.name)
     return 1
 
