@@ -315,7 +315,7 @@ def _generate_qiime_config(python_path, deploy_dir, all_apps_to_deploy, log,
     lines.append('pynast_template_alignment_blastdb\t\n')
 
     lines.append('jobs_to_start\t1\n')
-    lines.append('seconds_to_sleep\t60\n')
+    lines.append('seconds_to_sleep\t1\n')
     lines.append('temp_dir\t/tmp/\n')
 
     #lines for Greengenes files
