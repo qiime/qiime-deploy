@@ -527,7 +527,7 @@ class Application:
 
         # The first command turns warnings into errors so that we can obtain a
         # nonzero return code if the download/install fails.
-        if (self.r_package_name == 'metagenomeSeq'):
+        if self.r_package_name == 'metagenomeSeq':
             cmd = ("echo \"options(warn=2); source('%s'); biocLite('%s',"
                    "INSTALL_opts=c('--pkglock'))\" | %s --slave "
                    "--vanilla" % (self.r_package_repo,
