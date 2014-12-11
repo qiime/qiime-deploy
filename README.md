@@ -15,13 +15,8 @@ installing other QIIME-related projects/tools.
 
 Also, while _qiime-deploy_ downloads, builds, and installs many of QIIME's
 dependencies, it does expect common packages to already be installed on your
-system. For example, on Debian Lenny, a complete QIIME install depends on the
-following packages:
-
-    libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git
-    subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2
-    libreadline-dev gfortran unzip libmysqlclient16 libmysqlclient-dev ghc
-    python-dev libncurses5-dev libbz2-dev
+system. See below for a list of these prerequisites, which will differ depending
+on your Linux distribution.
 
 After the deploy completes it will generate an ```activate.sh``` file in the
 base deploy directory. It is necessary to ```source``` that file in order to
@@ -62,20 +57,20 @@ It's therefore best to run this command before the following step.
 
     For Ubuntu 11.10:
 
-        sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient16 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libbz2-dev
+        sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient16 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libbz2-dev tcl-dev tk-dev
 
     For Ubuntu 12.04:
- 
-        sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient18 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libc6-i386 libbz2-dev
+
+        sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient18 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev
 
 ## Setting up qiime-deploy on CentOS and RedHat
 
 Below is the summary of steps required for running _qiime-deploy_ on CentOS and RedHat (tested on CentOS 6.4):
 
 1. Add the following repositories to your yum configuration directory (required to intall ZeroMQ):
-    
-    For RHEL/CentOS 6: 
-    
+
+    For RHEL/CentOS 6:
+
         http://download.opensuse.org/repositories/home:/fengshuo:/zeromq/CentOS_CentOS-6/home:fengshuo:zeromq.repo
 
     This can be done by creating a file in /etc/yum.repos.d/, e.g., named zeromq.repo (requires admin (sudo) access). You can use your favorite text editor but we suggest _pico_ for simplicity. Note that at the bottom of the screen you will have the commands to save, exit, etc.
@@ -85,7 +80,7 @@ Below is the summary of steps required for running _qiime-deploy_ on CentOS and 
     Paste the following into that file:
 
     For RHEL/CentOS 6:
-    
+
         [home_fengshuo_zeromq]
         name=The latest stable of zeromq builds (CentOS_CentOS-6)
         type=rpm-md
@@ -99,10 +94,10 @@ Below is the summary of steps required for running _qiime-deploy_ on CentOS and 
 2. Install the _qiime-deploy_ dependencies on your machine. These steps require
 admin (sudo) access. If you do not have sudo access, you must ask your system
 administrator to grant you sudo access, or to run these commands for you.
-        
+
         sudo yum groupinstall -y "development tools"
 
-        sudo yum install -y ant compat-gcc-34-g77 java-1.6.0-openjdk java-1.6.0-openjdk-devel freetype freetype-devel zlib-devel mpich2 readline-devel zeromq zeromq-devel gsl gsl-devel libxslt libpng libpng-devel libgfortran mysql mysql-devel libXt libXt-devel libX11-devel mpich2 mpich2-devel libxml2 xorg-x11-server-Xorg dejavu* python-devel sqlite-devel
+        sudo yum install -y ant compat-gcc-34-g77 java-1.6.0-openjdk java-1.6.0-openjdk-devel freetype freetype-devel zlib-devel mpich2 readline-devel zeromq zeromq-devel gsl gsl-devel libxslt libpng libpng-devel libgfortran mysql mysql-devel libXt libXt-devel libX11-devel mpich2 mpich2-devel libxml2 xorg-x11-server-Xorg dejavu* python-devel sqlite-devel tcl-devel tk-devel
 
 ## Common usage examples
 

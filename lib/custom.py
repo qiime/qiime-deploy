@@ -286,6 +286,10 @@ def _generate_qiime_config(python_path, deploy_dir, all_apps_to_deploy, log,
         # lines for n3phele
         lines.append('cloud_environment\tFalse\n')
 
+        path = deploy_dir + '/lanemask_in_1s_and_0s'
+        line = 'template_alignment_lanemask_fp\t%s\n' % path
+        lines.append(line)
+
         parallel_jobs_path = os.path.join(qiime_path, parallel_jobs_script)
     else:
         parallel_jobs_path = parallel_jobs_script
@@ -302,10 +306,6 @@ def _generate_qiime_config(python_path, deploy_dir, all_apps_to_deploy, log,
     lines.append(line)
 
     line = 'blastmat_dir\t%s\n' % blast_data_path
-    lines.append(line)
-
-    path = deploy_dir + '/lanemask_in_1s_and_0s'
-    line = 'template_alignment_lanemask_fp\t%s\n' % path
     lines.append(line)
 
     path = deploy_dir + '/core_set_aligned.fasta.imputed'
