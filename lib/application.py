@@ -13,10 +13,10 @@ values and deploying the application. If a new build-type is added to
 qiime-deploy then this class must be modified to support it.
 """
 class Application:
-    def __init__(self, 
-                 name, 
-                 env, 
-                 config, 
+    def __init__(self,
+                 name,
+                 env,
+                 config,
                  custom_py_exe=None,
                  custom_r_exe=None,
                  remove_repos=False):
@@ -223,7 +223,7 @@ class Application:
         except:
             self.log.debug('%s has no python-build-options' % name)
             self.py_build_opts = None
-            
+
         try:
             self.py_install_opts = config.get(name, 'python-install-options')
         except:
@@ -357,7 +357,7 @@ class Application:
         return 0
 
     def _deploy_autoconf(self, setup_dir):
-        rc = util.gnu_autoconf(self.name, 
+        rc = util.gnu_autoconf(self.name,
                                setup_dir,
                                self.deploy_dir,
                                self.ac_config_opts,
@@ -522,12 +522,18 @@ class Application:
 
         # The first command turns warnings into errors so that we can obtain a
         # nonzero return code if the download/install fails.
-        cmd  = ("echo \"options(warn=2); "
-                "install.packages('%s',repos='%s',"
-                "INSTALL_opts=c('--pkglock'))\" | "
-                "%s --slave --vanilla" % (self.r_package_name,
-                                          self.r_package_repo,
-                                          self.r_exe))
+        if (self.r_package_name == 'metagenomeSeq'):
+            cmd  = ("echo \"options(warn=2); source('%s'); biocLite('%s')\" | "
+                    "%s --slave --vanilla" % (self.r_package_repo,
+                                              self.r_package_name,
+                                              self.r_exe))
+        else:
+            cmd  = ("echo \"options(warn=2); "
+                    "install.packages('%s',repos='%s',"
+                    "INSTALL_opts=c('--pkglock'))\" | "
+                    "%s --slave --vanilla" % (self.r_package_name,
+                                              self.r_package_repo,
+                                              self.r_exe))
         (rc, output) = commands.getstatusoutput(cmd)
 
         if rc == 0:
@@ -572,7 +578,7 @@ class Application:
     def _terminate(self, rc=1):
         shutil.rmtree(self.tmp_dir)
         return rc
-        
+
     def deploy(self):
         self.log.info('Deploying app: %s' % self.name)
 
