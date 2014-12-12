@@ -532,6 +532,10 @@ class Application:
         # nonzero return code if the download/install fails.
         if self.r_package_name == 'metagenomeSeq':
             cmd = ("echo \"options(warn=2); source('%s'); biocLite('%s',"
+                   # Don't try to update all other packages in case we don't
+                   # have write permissions to the R installation and the
+                   # packages that came with it.
+                   "suppressUpdates=TRUE,"
                    "INSTALL_opts=c('--pkglock'))\" | %s --slave "
                    "--vanilla" % (self.r_package_repo,
                                   self.r_package_name,
