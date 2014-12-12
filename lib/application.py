@@ -70,7 +70,7 @@ class Application:
         except:
             self.log.debug('%s has no repository-local-name' % name)
             self.repository_local_name = None
-        try: 
+        try:
             self.make_folderpath_relative_to_local = config.get(name, 'make-folderpath-relative-to-local')
         except:
             self.log.debug('%s has no make-folderpath-relative-to-local' % name)
@@ -530,7 +530,7 @@ class Application:
 
         # The first command turns warnings into errors so that we can obtain a
         # nonzero return code if the download/install fails.
-        if self.r_package_name == 'metagenomeSeq':
+        if self.r_package_name in ['metagenomeSeq', 'DESeq']:
             cmd = ("echo \"options(warn=2); source('%s'); biocLite('%s',"
                    # Don't try to update all other packages in case we don't
                    # have write permissions to the R installation and the
