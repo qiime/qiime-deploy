@@ -40,20 +40,40 @@ we provide a short guide to setting up your Ubuntu system so that it can run
 _qiime-deploy_.
 
 In order to ensure that you have the required prerequisite packages installed
-on your Ubuntu system, perform the following steps:
+on your Ubuntu system, perform the following steps. These steps require admin
+(sudo) access. If you do not have sudo access, you must ask your system
+administrator to grant you sudo access, or to run the following steps for you.
 
-1. Uncomment the universe and multiverse repositories from
-```/etc/apt/sources.list```. You can use your favorite text editor but we
-suggest _pico_ for simplicity. Note that at the bottom of the screen you
-will have the commands to save, exit, etc..
+1. Open ```/etc/apt/sources.list``` with a text editor. You can use your
+favorite text editor but we suggest _pico_ for simplicity. Note that at the
+bottom of the screen you will have the commands to save, exit, etc.:
 
         sudo pico /etc/apt/sources.list
 
-2. Install the _qiime-deploy_ dependencies on your machine. This step requires
-admin (sudo) access. If you do not have sudo access, you must ask your system
-administrator to grant you sudo access, or to run these steps for you. In
-general, all of this software should already be installed but it may not be.
-It's therefore best to run this command before the following step.
+    Uncomment the universe and multiverse repositories in this file.
+
+    Add the following line to the bottom of this file in order to install a
+    newer version of R than is available by default on the system.
+
+    For Ubuntu 11.10:
+
+        deb http://cran.rstudio.com/bin/linux/ubuntu oneiric/
+
+    For Ubuntu 12.04:
+
+        deb http://cran.rstudio.com/bin/linux/ubuntu precise/
+
+    Save and close this file.
+
+2. Update your system to retrieve the latest list of packages (this step is
+especially important because we added new package repositories in the previous
+step):
+
+        sudo apt-get -y update
+
+3. Install the _qiime-deploy_ prerequisite packages on your machine. In general,
+most of this software should already be installed but some packages may not be.
+It is therefore best to run this command before continuing.
 
     For Ubuntu 11.10:
 
