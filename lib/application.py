@@ -525,6 +525,9 @@ class Application:
         # shell initialization before installing the package.
         os.chdir(self.deploy_dir)
 
+        self.log.debug('Adding to R_LIBS: %s' % self.deploy_dir)
+        self.env.update_env_var('R_LIBS', self.deploy_dir)
+
         # The first command turns warnings into errors so that we can obtain a
         # nonzero return code if the download/install fails.
         if self.r_package_name == 'metagenomeSeq':
