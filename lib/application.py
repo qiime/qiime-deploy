@@ -530,7 +530,7 @@ class Application:
 
         # The first command turns warnings into errors so that we can obtain a
         # nonzero return code if the download/install fails.
-        if self.r_package_name in ['metagenomeSeq', 'DESeq']:
+        if self.r_package_name in ['metagenomeSeq', 'DESeq', 'DESeq2']:
             cmd = ("echo \"options(warn=2); source('%s'); biocLite('%s',"
                    # Don't try to update all other packages in case we don't
                    # have write permissions to the R installation and the
