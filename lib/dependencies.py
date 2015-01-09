@@ -1,14 +1,6 @@
 import commands
 import logging
 
-"""
-not currently checking for these required packages:
-e.g. debian packages: libgsl0-dev, openjdk-6-jdk, libxml2, libxslt1.1, 
-                      libxslt1-dev, ant, subversion, build-essential,
-                      zlib1g-dev, libpng12-dev, libfreetype6-dev
-                      mpich2, libreadline-dev, gfortran, unzip,
-                      libmysqlclient16, libmysqlclient16-dev
-"""
 def dependencies_ok(config):
     log = logging.getLogger(__name__)
 
