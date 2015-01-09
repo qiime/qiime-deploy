@@ -32,7 +32,7 @@ modify the _qiime-deploy_ conf file (see the _qiime-deploy-conf_ project
 [here](https://github.com/qiime/qiime-deploy-conf) for a description of the
 options you can tweak).
 
-## Setting up qiime-deploy on Ubuntu
+### Setting up qiime-deploy on Ubuntu
 
 While _qiime-deploy_ may work on various Linux distributions, it has been most
 heavily tested on Ubuntu 11.10 and 12.04 LTS (64-bit) systems. Thus,
@@ -77,13 +77,13 @@ It is therefore best to run this command before continuing.
 
     For Ubuntu 11.10:
 
-        sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient16 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libbz2-dev tcl-dev tk-dev r-base r-base-dev
+        sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient16 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libbz2-dev tcl-dev tk-dev r-base r-base-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev
 
     For Ubuntu 12.04:
 
-        sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient18 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev r-base r-base-dev
+        sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient18 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev r-base r-base-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev
 
-## Setting up qiime-deploy on CentOS and RedHat
+### Setting up qiime-deploy on CentOS and RedHat
 
 Below is the summary of steps required for running _qiime-deploy_ on CentOS and RedHat (tested on CentOS 6.4):
 
@@ -118,6 +118,10 @@ administrator to grant you sudo access, or to run these commands for you.
         sudo yum groupinstall -y "development tools"
 
         sudo yum install -y ant compat-gcc-34-g77 java-1.6.0-openjdk java-1.6.0-openjdk-devel freetype freetype-devel zlib-devel mpich2 readline-devel zeromq zeromq-devel gsl gsl-devel libxslt libpng libpng-devel libgfortran mysql mysql-devel libXt libXt-devel libX11-devel mpich2 mpich2-devel libxml2 xorg-x11-server-Xorg dejavu* python-devel sqlite-devel tcl-devel tk-devel R R-devel
+
+### Installing requisite Python and R packages
+
+Installing the latest version of QIIME (currently 1.9.0) using _qiime-deploy_ does not install Python, R, or their respective requisite packages (this behavior differs from how _qiime-deploy_ installed previous versions of QIIME). _qiime-deploy_ now assumes that a minimal (base) QIIME install exists. Follow the instructions [here](http://qiime.org/install/install.html#installing-qiime-natively-with-a-minimal-base-install) to obtain a minimal (base) QIIME install. Next, follow the instructions [here](http://qiime.org/install/install.html#r-install-notes) to install QIIME's requisite R packages. You're now ready to use _qiime-deploy_ to install QIIME's remaining dependencies.
 
 ## Common usage examples
 
