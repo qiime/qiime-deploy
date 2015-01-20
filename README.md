@@ -7,7 +7,7 @@ QIIME's dependencies on Linux systems.
 complete QIIME installation. Python, R, and their respective requisite packages
 are not installed because we expect users to install these dependencies using
 standard package managers that are available for the language (e.g., using
-```pip`` to install Python packages). Also, certain dependencies
+```pip``` to install Python packages). Also, certain dependencies
 (e.g., _usearch_) are not installed due to licensing restrictions.
 
 ## Getting started
