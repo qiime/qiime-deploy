@@ -1,7 +1,14 @@
 # qiime-deploy
 
-A Python application to build, configure, and deploy QIIME and its
-dependencies on Linux systems.
+_qiime-deploy_ is a tool for building, configuring, and deploying many of
+QIIME's dependencies on Linux systems.
+
+**Note:** _qiime-deploy_ *does not* install every dependency necessary for a
+complete QIIME installation. Python, R, and their respective requisite packages
+are not installed because we expect users to install these dependencies using
+standard package managers that are available for the language (e.g., using
+```pip`` to install Python packages). Also, certain dependencies
+(e.g., _usearch_) are not installed due to licensing restrictions.
 
 ## Getting started
 
@@ -11,7 +18,7 @@ You can find many QIIME deployment configuration files in the
 _qiime-deploy-conf_ project [here](https://github.com/qiime/qiime-deploy-conf)
 as well as a description of all possible options and the configuration file
 format. There are also various other configuration files included for
-installing other QIIME-related projects/tools.
+installing QIIME-related projects/tools.
 
 Also, while _qiime-deploy_ downloads, builds, and installs many of QIIME's
 dependencies, it does expect common packages to already be installed on your
@@ -127,8 +134,8 @@ Installing the latest version of QIIME (currently 1.9.0) using _qiime-deploy_ do
 
 The following subsections include examples of common _qiime-deploy_ use cases.
 
-__Note:__ At the time of this writing, QIIME 1.8.0 is the latest public
-release, and QIIME 1.8.0-dev is the development version of QIIME. As newer
+__Note:__ At the time of this writing, QIIME 1.9.0 is the latest public
+release, and QIIME 1.9.0-dev is the development version of QIIME. As newer
 versions of QIIME are released we will include conf files for each new version
 in the
 [qiime-deploy-conf project](https://github.com/qiime/qiime-deploy-conf). The
@@ -143,23 +150,24 @@ command:
 
     python qiime-deploy.py -h
 
-### Installing QIIME 1.8.0 (stable public release)
+### Installing QIIME 1.9.0's dependencies
 
-To install QIIME 1.8.0 under ```$HOME/qiime_software/```, run the following
-commands. These commands assume you have already set up your system following
-the directions above and that you are in your home directory. You can change
-these paths as you like (e.g. to install QIIME under a different directory),
-but you will need to modify the commands we provide to use the new paths.
+To install QIIME 1.9.0's dependencies under ```$HOME/qiime_software/```, run the
+following commands. These commands assume you have already set up your system
+following the directions above and that you are in your home directory. You can
+change these paths as you like (e.g. to install QIIME's dependencies under a
+different directory), but you will need to modify the commands we provide to use
+the new paths.
 
     git clone git://github.com/qiime/qiime-deploy.git
     git clone git://github.com/qiime/qiime-deploy-conf.git
     cd qiime-deploy/
-    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-1.8.0/qiime.conf --force-remove-failed-dirs
+    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-1.9.0/qiime.conf --force-remove-failed-dirs
     source $HOME/.bashrc
 
 To test that you have a functioning QIIME install, run the following command:
 
-    print_qiime_config.py -t
+    print_qiime_config.py -tf
 
 _qiime-deploy_ will create a QIIME config file under
 ```$HOME/qiime_software/qiime_config``` as part of the deployment process. If
@@ -168,59 +176,38 @@ free to do so. If you rerun _qiime-deploy_ using the same deploy directory (in
 this example, ```$HOME/qiime_software/```), your old QIIME config will be
 renamed to ```qiime_config.bak``` and the new one will be named ```qiime_config```.
 
-### Installing QIIME 1.8.0-dev
-
-Now that QIIME can be [installed via pip](http://qiime.org/install/install.html#installing-qiime-via-pip),
-this is the recommended method of installing QIIME and its Python dependencies.
-Thus, the installation process for the latest development version of QIIME
-(currently 1.8.0-dev) differs from that of the latest QIIME release.
-
-To install the latest development version of QIIME, run the following commands:
-
-    pip install numpy==1.7.1
-    pip install git+git://github.com/qiime/qiime.git
-
-Finally, run _qiime-deploy_ to install the remaining non-Python dependencies
-required by QIIME. Note that we supply a different _qiime-deploy_ conf file as
-input:
-
-    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-dev/qiime.conf --force-remove-failed-dirs --force-remove-previous-repos
-
-**Note:** The latest development version of a project will always reside under
-a directory suffixed with ```-dev```. For example, the latest development
-version of QIIME will always be under ```qiime-deploy-conf/qiime-dev/```.
-
 ### Installing multiple versions of QIIME
 
-You may install more than one version of QIIME on your system. To do so, you
-will need to install each version in its own deploy directory. For example, if
-you would like to have QIIME 1.8.0 and QIIME 1.8.0-dev, you could install
-QIIME 1.8.0 under ```$HOME/qiime-1.8.0/``` and QIIME 1.8.0-dev under
-```$HOME/qiime-1.8.0-dev/```. To activate the QIIME version that you would like
+You may install more than one version of QIIME's dependencies on your system. To
+do so, you will need to install each version in its own deploy directory. For
+example, if you would like to have both the dependencies for QIIME 1.9.0 and
+QIIME 1.9.0-dev, you could install QIIME 1.9.0's dependencies under
+```$HOME/qiime-1.9.0/``` and QIIME 1.9.0-dev's dependencies under
+```$HOME/qiime-1.9.0-dev/```. To activate the QIIME version that you would like
 to use, ```source``` the appropriate ```activate.sh``` file. For example, to
-activate QIIME 1.8.0-dev, you would run the following command:
+activate QIIME 1.9.0-dev, you would run the following command:
 
-    source $HOME/qiime-1.8.0-dev/activate.sh
+    source $HOME/qiime-1.9.0-dev/activate.sh
 
 If you are unsure of what version of QIIME you currently have activated, run
 the following command:
 
-    print_qiime_config.py -t
+    print_qiime_config.py
 
 ### Changing QIIME versions
 
-If you want to change the version of QIIME in an __existing__ _qiime-deploy_
-install, you can simply run _qiime-deploy_ with the conf file corresponding to
-the version that you'd like to upgrade/downgrade to. Make sure to specify the
-existing deploy directory in order to upgrade/downgrade your existing install.
-If you specify a new directory, you will end up with multiple versions of QIIME
-installed on your system (which is okay; see the section above for more
-details).
+If you want to change the version of QIIME's dependencies in an __existing__
+_qiime-deploy_ install, you can simply run _qiime-deploy_ with the conf file
+corresponding to the version that you'd like to upgrade/downgrade to. Make sure
+to specify the existing deploy directory in order to upgrade/downgrade your
+existing install. If you specify a new directory, you will end up with multiple
+versions of QIIME's dependencies installed on your system (which is okay; see
+the section above for more details).
 
 ## Frequently Asked Questions
 
-__When I run ```print_qiime_config.py -t```, I get a test failure for usearch.
-How can I fix this?__
+__When I run ```print_qiime_config.py -tf```, I get a test failure for
+_usearch_. How can I fix this?__
 
 _qiime-deploy_ cannot install _usearch_ due to licensing restrictions. You can
 obtain the _usearch_ binary
@@ -239,13 +226,13 @@ permissions are set. For example:
     echo 'export PATH=$HOME/bin:$PATH' >> $HOME/.bashrc
     (open a new terminal)
     usearch --version
-    print_qiime_config.py -t
+    print_qiime_config.py -tf
 
 __Does _qiime-deploy_ work on 32-bit operating systems?__
 
 No, _qiime-deploy_ only supports 64-bit operating systems. If you run
 _qiime-deploy_ on a 32-bit system, it may correctly install some dependencies,
-but when running ```print_qiime_config.py -t``` to check that your QIIME
+but when running ```print_qiime_config.py -tf``` to check that your QIIME
 install is functioning, you may receive strange errors similar to the
 following:
 
