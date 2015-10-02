@@ -94,7 +94,7 @@ It is therefore best to run this command before continuing.
 
 Below is the summary of steps required for running _qiime-deploy_ on CentOS and RedHat (tested on CentOS 6.4):
 
-1. Add the following repositories to your yum configuration directory (required to intall ZeroMQ):
+1. Add the following repositories to your yum configuration directory (required to install ZeroMQ):
 
     For RHEL/CentOS 6:
 
