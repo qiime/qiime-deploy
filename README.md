@@ -69,6 +69,10 @@ bottom of the screen you will have the commands to save, exit, etc.:
     For Ubuntu 12.04:
 
         deb http://cran.rstudio.com/bin/linux/ubuntu precise/
+        
+    For Ubuntu 14.04:
+
+        deb http://cran.rstudio.com/bin/linux/ubuntu trusty/    
 
     Save and close this file.
 
@@ -86,7 +90,7 @@ It is therefore best to run this command before continuing.
 
         sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient16 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libbz2-dev tcl-dev tk-dev r-base r-base-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev
 
-    For Ubuntu 12.04:
+    For Ubuntu 12.04 and Ubuntu 14.04:
 
         sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient18 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev r-base r-base-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev
 
@@ -134,8 +138,8 @@ Installing the latest version of QIIME (currently 1.9.0) using _qiime-deploy_ do
 
 The following subsections include examples of common _qiime-deploy_ use cases.
 
-__Note:__ At the time of this writing, QIIME 1.9.0 is the latest public
-release, and QIIME 1.9.0-dev is the development version of QIIME. As newer
+__Note:__ At the time of this writing, QIIME 1.9.1 is the latest public
+release, and QIIME 1.9.1-dev is the development version of QIIME. As newer
 versions of QIIME are released we will include conf files for each new version
 in the
 [qiime-deploy-conf project](https://github.com/qiime/qiime-deploy-conf). The
@@ -150,9 +154,9 @@ command:
 
     python qiime-deploy.py -h
 
-### Installing QIIME 1.9.0's dependencies
+### Installing QIIME 1.9.1's dependencies
 
-To install QIIME 1.9.0's dependencies under ```$HOME/qiime_software/```, run the
+To install QIIME 1.9.1's dependencies under ```$HOME/qiime_software/```, run the
 following commands. These commands assume you have already set up your system
 following the directions above and that you are in your home directory. You can
 change these paths as you like (e.g. to install QIIME's dependencies under a
@@ -180,14 +184,14 @@ renamed to ```qiime_config.bak``` and the new one will be named ```qiime_config`
 
 You may install more than one version of QIIME's dependencies on your system. To
 do so, you will need to install each version in its own deploy directory. For
-example, if you would like to have both the dependencies for QIIME 1.9.0 and
-QIIME 1.9.0-dev, you could install QIIME 1.9.0's dependencies under
-```$HOME/qiime-1.9.0/``` and QIIME 1.9.0-dev's dependencies under
-```$HOME/qiime-1.9.0-dev/```. To activate the QIIME version that you would like
+example, if you would like to have both the dependencies for QIIME 1.9.1 and
+QIIME 1.9.1-dev, you could install QIIME 1.9.1's dependencies under
+```$HOME/qiime-1.9.1/``` and QIIME 1.9.1-dev's dependencies under
+```$HOME/qiime-1.9.1-dev/```. To activate the QIIME version that you would like
 to use, ```source``` the appropriate ```activate.sh``` file. For example, to
-activate QIIME 1.9.0-dev, you would run the following command:
+activate QIIME 1.9.1-dev, you would run the following command:
 
-    source $HOME/qiime-1.9.0-dev/activate.sh
+    source $HOME/qiime-1.9.1-dev/activate.sh
 
 If you are unsure of what version of QIIME you currently have activated, run
 the following command:
