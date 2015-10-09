@@ -147,6 +147,16 @@ following usage examples will work for any version of QIIME (unless otherwise
 noted), but you will need to supply the correct conf file as input to
 _qiime-deploy_.
 
+### Downloading qiime-deploy 
+
+To get started please download 
+the repositories listed below. These commands assume you have already set up your system
+following the directions above and that you are in your home directory. 
+
+    git clone git://github.com/qiime/qiime-deploy.git
+    git clone git://github.com/qiime/qiime-deploy-conf.git
+    cd qiime-deploy/
+    
 ### View qiime-deploy options
 
 To see the available options provided by qiime-deploy, run the following
@@ -162,10 +172,7 @@ following the directions above and that you are in your home directory. You can
 change these paths as you like (e.g. to install QIIME's dependencies under a
 different directory), but you will need to modify the commands we provide to use
 the new paths.
-
-    git clone git://github.com/qiime/qiime-deploy.git
-    git clone git://github.com/qiime/qiime-deploy-conf.git
-    cd qiime-deploy/
+    
     python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-1.9.0/qiime.conf --force-remove-failed-dirs
     source $HOME/.bashrc
 
