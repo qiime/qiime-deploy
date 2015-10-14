@@ -132,7 +132,7 @@ administrator to grant you sudo access, or to run these commands for you.
 
 ### Installing requisite Python and R packages
 
-Installing the latest version of QIIME (currently 1.9.0) using _qiime-deploy_ does not install Python, R, or their respective requisite packages (this behavior differs from how _qiime-deploy_ installed previous versions of QIIME). _qiime-deploy_ now assumes that a minimal (base) QIIME install exists. Follow the instructions [here](http://qiime.org/install/install.html#installing-qiime-natively-with-a-minimal-base-install) to obtain a minimal (base) QIIME install. Next, follow the instructions [here](http://qiime.org/install/install.html#r-install-notes) to install QIIME's requisite R packages. You're now ready to use _qiime-deploy_ to install QIIME's remaining dependencies.
+Installing the latest version of QIIME (currently 1.9.1) using _qiime-deploy_ does not install Python, R, or their respective requisite packages (this behavior differs from how _qiime-deploy_ installed previous versions of QIIME). _qiime-deploy_ now assumes that a minimal (base) QIIME install exists. Follow the instructions [here](http://qiime.org/install/install.html#installing-qiime-natively-with-a-minimal-base-install) to obtain a minimal (base) QIIME install. Next, follow the instructions [here](http://qiime.org/install/install.html#r-install-notes) to install QIIME's requisite R packages. You're now ready to use _qiime-deploy_ to install QIIME's remaining dependencies.
 
 ## Common usage examples
 
@@ -173,7 +173,7 @@ change these paths as you like (e.g. to install QIIME's dependencies under a
 different directory), but you will need to modify the commands we provide to use
 the new paths.
     
-    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-1.9.0/qiime.conf --force-remove-failed-dirs
+    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-1.9.1/qiime.conf --force-remove-failed-dirs
     source $HOME/.bashrc
 
 To test that you have a functioning QIIME install, run the following command:
