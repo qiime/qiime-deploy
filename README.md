@@ -69,6 +69,10 @@ bottom of the screen you will have the commands to save, exit, etc.:
     For Ubuntu 12.04:
 
         deb http://cran.rstudio.com/bin/linux/ubuntu precise/
+        
+    For Ubuntu 14.04:
+
+        deb http://cran.rstudio.com/bin/linux/ubuntu trusty/    
 
     Save and close this file.
 
@@ -86,7 +90,7 @@ It is therefore best to run this command before continuing.
 
         sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient16 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libbz2-dev tcl-dev tk-dev r-base r-base-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev
 
-    For Ubuntu 12.04:
+    For Ubuntu 12.04 and Ubuntu 14.04:
 
         sudo apt-get --force-yes -y install python-dev libncurses5-dev libssl-dev libzmq-dev libgsl0-dev openjdk-6-jdk libxml2 libxslt1.1 libxslt1-dev ant git subversion build-essential zlib1g-dev libpng12-dev libfreetype6-dev mpich2 libreadline-dev gfortran unzip libmysqlclient18 libmysqlclient-dev ghc sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev r-base r-base-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev
 
@@ -128,14 +132,14 @@ administrator to grant you sudo access, or to run these commands for you.
 
 ### Installing requisite Python and R packages
 
-Installing the latest version of QIIME (currently 1.9.0) using _qiime-deploy_ does not install Python, R, or their respective requisite packages (this behavior differs from how _qiime-deploy_ installed previous versions of QIIME). _qiime-deploy_ now assumes that a minimal (base) QIIME install exists. Follow the instructions [here](http://qiime.org/install/install.html#installing-qiime-natively-with-a-minimal-base-install) to obtain a minimal (base) QIIME install. Next, follow the instructions [here](http://qiime.org/install/install.html#r-install-notes) to install QIIME's requisite R packages. You're now ready to use _qiime-deploy_ to install QIIME's remaining dependencies.
+Installing the latest version of QIIME (currently 1.9.1) using _qiime-deploy_ does not install Python, R, or their respective requisite packages (this behavior differs from how _qiime-deploy_ installed previous versions of QIIME). _qiime-deploy_ now assumes that a minimal (base) QIIME install exists. Follow the instructions [here](http://qiime.org/install/install.html#installing-qiime-natively-with-a-minimal-base-install) to obtain a minimal (base) QIIME install. Next, follow the instructions [here](http://qiime.org/install/install.html#r-install-notes) to install QIIME's requisite R packages. You're now ready to use _qiime-deploy_ to install QIIME's remaining dependencies.
 
 ## Common usage examples
 
 The following subsections include examples of common _qiime-deploy_ use cases.
 
-__Note:__ At the time of this writing, QIIME 1.9.0 is the latest public
-release, and QIIME 1.9.0-dev is the development version of QIIME. As newer
+__Note:__ At the time of this writing, QIIME 1.9.1 is the latest public
+release, and QIIME 1.9.1-dev is the development version of QIIME. As newer
 versions of QIIME are released we will include conf files for each new version
 in the
 [qiime-deploy-conf project](https://github.com/qiime/qiime-deploy-conf). The
@@ -143,6 +147,16 @@ following usage examples will work for any version of QIIME (unless otherwise
 noted), but you will need to supply the correct conf file as input to
 _qiime-deploy_.
 
+### Downloading qiime-deploy 
+
+To get started please download 
+the repositories listed below. These commands assume you have already set up your system
+following the directions above and that you are in your home directory. 
+
+    git clone git://github.com/qiime/qiime-deploy.git
+    git clone git://github.com/qiime/qiime-deploy-conf.git
+    cd qiime-deploy/
+    
 ### View qiime-deploy options
 
 To see the available options provided by qiime-deploy, run the following
@@ -150,19 +164,16 @@ command:
 
     python qiime-deploy.py -h
 
-### Installing QIIME 1.9.0's dependencies
+### Installing QIIME 1.9.1's dependencies
 
-To install QIIME 1.9.0's dependencies under ```$HOME/qiime_software/```, run the
+To install QIIME 1.9.1's dependencies under ```$HOME/qiime_software/```, run the
 following commands. These commands assume you have already set up your system
 following the directions above and that you are in your home directory. You can
 change these paths as you like (e.g. to install QIIME's dependencies under a
 different directory), but you will need to modify the commands we provide to use
 the new paths.
-
-    git clone git://github.com/qiime/qiime-deploy.git
-    git clone git://github.com/qiime/qiime-deploy-conf.git
-    cd qiime-deploy/
-    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-1.9.0/qiime.conf --force-remove-failed-dirs
+    
+    python qiime-deploy.py $HOME/qiime_software/ -f $HOME/qiime-deploy-conf/qiime-1.9.1/qiime.conf --force-remove-failed-dirs
     source $HOME/.bashrc
 
 To test that you have a functioning QIIME install, run the following command:
@@ -180,14 +191,14 @@ renamed to ```qiime_config.bak``` and the new one will be named ```qiime_config`
 
 You may install more than one version of QIIME's dependencies on your system. To
 do so, you will need to install each version in its own deploy directory. For
-example, if you would like to have both the dependencies for QIIME 1.9.0 and
-QIIME 1.9.0-dev, you could install QIIME 1.9.0's dependencies under
-```$HOME/qiime-1.9.0/``` and QIIME 1.9.0-dev's dependencies under
-```$HOME/qiime-1.9.0-dev/```. To activate the QIIME version that you would like
+example, if you would like to have both the dependencies for QIIME 1.9.1 and
+QIIME 1.9.1-dev, you could install QIIME 1.9.1's dependencies under
+```$HOME/qiime-1.9.1/``` and QIIME 1.9.1-dev's dependencies under
+```$HOME/qiime-1.9.1-dev/```. To activate the QIIME version that you would like
 to use, ```source``` the appropriate ```activate.sh``` file. For example, to
-activate QIIME 1.9.0-dev, you would run the following command:
+activate QIIME 1.9.1-dev, you would run the following command:
 
-    source $HOME/qiime-1.9.0-dev/activate.sh
+    source $HOME/qiime-1.9.1-dev/activate.sh
 
 If you are unsure of what version of QIIME you currently have activated, run
 the following command:
